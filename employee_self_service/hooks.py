@@ -19,6 +19,12 @@ fixtures = [
             ["dt", "=", "Employee"]
         ]
     },
+      {
+        "dt": "Custom HTML Block",
+        "filters": [
+            ["name", "=", "Employee Self Service"]
+        ]
+    },
 ]
 
 # Apps
