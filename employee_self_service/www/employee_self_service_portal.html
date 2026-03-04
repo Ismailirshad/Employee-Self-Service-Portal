@@ -1,4 +1,4 @@
-{% extends "templates/web.html" %}
+<!-- {% extends "templates/web.html" %}
 {% block page_content %}
 
 <style>
@@ -122,5 +122,48 @@ button {
         }
     })
   }
+
+
+const checkInBtn = root_element.querySelector(".check-in");
+const checkOutBtn = root_element.querySelector(".check-out");
+
+checkInBtn.addEventListener("click", function () {
+
+    if (!navigator.geolocation) {
+        frappe.msgprint("Geolocation not supported");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+
+        frappe.call({
+            method: "employee_self_service.api.get_location",
+            args: {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            },
+            callback: function (res) {
+                if (res.message) {
+                    frappe.msgprint(res.message);
+                }
+            }
+        });
+
+    });
+
+});
+
+checkOutBtn.addEventListener("click", function () {
+
+    frappe.call({
+        method: "employee_self_service.api.handle_checkout",
+        callback: function (res) {
+            if (res.message) {
+                frappe.msgprint(res.message);
+            }
+        }
+    });
+
+});
 </script>
-{% endblock %}
+{% endblock %} -->

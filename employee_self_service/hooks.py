@@ -5,6 +5,16 @@ app_description = "Employee Self Service"
 app_email = "irshadsha164@gmail.com"
 app_license = "mit"
 
+
+fixtures = [
+    {
+        "dt": "Workspace",
+        "filters": [
+            ["module", "=", "Employee Self Service"]
+        ]
+    }
+]
+
 # Apps
 # ------------------
 

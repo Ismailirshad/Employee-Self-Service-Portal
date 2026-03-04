@@ -41,9 +41,9 @@ def get_location(latitude, longitude):
     site_latitude = location_data["features"][0]["geometry"]["coordinates"][1]
     
 # to understand the degree of latitude and longitude in meters
-#     1 degree ≈ 111 km
-#     0.001 degree ≈ 111 meters
-#     00045 degree ≈ 50 meters
+# 1 degree ≈ 111 km
+# 0.001 degree ≈ 111 meters
+# 0.0045 degree ≈ 50 meters
     allowed_radius = employee.custom_allowed_radius or 50
     radius_in_degree = allowed_radius / 111000
 
@@ -77,7 +77,7 @@ def handle_checkout(latitude, longitude):
     employee = frappe.get_value(
         "Employee",
         {"user_id": user},
-        ["name", "custom_site_location"],
+        ["name", "custom_site_location", "custom_allowed_radius"],
         as_dict=True
     )
 
