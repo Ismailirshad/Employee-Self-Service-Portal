@@ -12,7 +12,13 @@ fixtures = [
         "filters": [
             ["module", "=", "Employee Self Service"]
         ]
-    }
+    },
+     {
+        "dt": "Custom Field",
+        "filters": [
+            ["dt", "=", "Employee"]
+        ]
+    },
 ]
 
 # Apps
