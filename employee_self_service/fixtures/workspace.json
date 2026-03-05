@@ -1,7 +1,7 @@
 [
  {
   "charts": [],
-  "content": "[{\"id\":\"Yl5g8dM00a\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 18px; letter-spacing: 0.18px;\\\"><b>Employee Attendance Section</b></span>\",\"col\":12}},{\"id\":\"02l7c91OPa\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Employee Self Service\",\"col\":12}}]",
+  "content": "[{\"id\":\"Yl5g8dM00a\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 18px; letter-spacing: 0.18px;\\\"><b>Employee Attendance Section</b></span>\",\"col\":12}},{\"id\":\"it3YyP7xLe\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Employee Self Service\",\"col\":12}}]",
   "custom_blocks": [
    {
     "custom_block_name": "Employee Self Service",
@@ -20,7 +20,7 @@
   "is_hidden": 0,
   "label": "Employee Self Service",
   "links": [],
-  "modified": "2026-03-04 16:08:30.886345",
+  "modified": "2026-03-04 18:23:53.350734",
   "module": "Employee Self Service",
   "name": "Employee Self Service",
   "number_cards": [],
@@ -34,6 +34,12 @@
     "parentfield": "roles",
     "parenttype": "Workspace",
     "role": "Employee"
+   },
+   {
+    "parent": "Employee Self Service",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "System Manager"
    }
   ],
   "sequence_id": 39.0,
