@@ -37,6 +37,9 @@ def get_location(latitude, longitude):
 # }
     location_data = json.loads(employee.custom_site_location)
     
+    if not location_data.get("features"):
+        return "Site location not defined for employee"
+    
     site_longitude = location_data["features"][0]["geometry"]["coordinates"][0]
     site_latitude = location_data["features"][0]["geometry"]["coordinates"][1]
     
