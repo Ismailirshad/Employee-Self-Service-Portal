@@ -1,5 +1,4 @@
 import frappe
-import json
 
 @frappe.whitelist()
 def get_location(latitude, longitude):
@@ -10,43 +9,26 @@ def get_location(latitude, longitude):
     employee = frappe.get_value(
         "Employee",
         {"user_id": user},
-        ["name", "custom_site_location", "custom_allowed_radius"],
+        ["name", "custom_site_latitude", "custom_site_longitude", "custom_allowed_radius"],
         as_dict=True
     )
     
     if not employee:
         return f"No Employee linked to {user}"
     
-    if not employee.custom_site_location:
+    if not employee.custom_site_latitude or not employee.custom_site_longitude:
         return "Site location not defined for employee"
 
-    print("location data:", employee.custom_site_location)
-# location data:
-# {
-#   "type": "FeatureCollection",
-#   "features": [
-#     {
-#       "type": "Feature",
-#       "properties": {},
-#       "geometry": {
-#         "type": "Point",
-#         "coordinates": [77.622292, 12.953445]
-#       }
-#     }
-#   ]
-# }
-    location_data = json.loads(employee.custom_site_location)
-    
-    if not location_data.get("features"):
-        return "Site location not defined for employee"
-    
-    site_longitude = location_data["features"][0]["geometry"]["coordinates"][0]
-    site_latitude = location_data["features"][0]["geometry"]["coordinates"][1]
+    print("location data:", employee.custom_site_latitude, employee.custom_site_longitude)
+
+    site_latitude = float(employee.custom_site_latitude)
+    site_longitude = float(employee.custom_site_longitude)
     
 # to understand the degree of latitude and longitude in meters
 # 1 degree ≈ 111 km
 # 0.001 degree ≈ 111 meters
 # 0.0045 degree ≈ 50 meters
+
     allowed_radius = employee.custom_allowed_radius or 50
     radius_in_degree = allowed_radius / 111000
 
@@ -75,27 +57,25 @@ def get_location(latitude, longitude):
 
 @frappe.whitelist()
 def handle_checkout(latitude, longitude):
+    
     user = frappe.session.user
 
     employee = frappe.get_value(
         "Employee",
         {"user_id": user},
-        ["name", "custom_site_location", "custom_allowed_radius"],
+        ["name", "custom_site_latitude", "custom_site_longitude", "custom_allowed_radius"],
         as_dict=True
     )
 
     if not employee:
         return f"No Employee linked to {user}"
     
-    if not employee.custom_site_location:
+    if not employee.custom_site_latitude or not employee.custom_site_longitude:
         return "Site location not defined for employee"
 
     
-    location_data = json.loads(employee.custom_site_location)
-    
-    site_longitude = location_data["features"][0]["geometry"]["coordinates"][0]
-    site_latitude = location_data["features"][0]["geometry"]["coordinates"][1]
-    
+    site_longitude = float(employee.custom_site_longitude)
+    site_latitude = float(employee.custom_site_latitude)
 
     allowed_radius = employee.custom_allowed_radius or 50
     radius_in_degree = allowed_radius / 111000

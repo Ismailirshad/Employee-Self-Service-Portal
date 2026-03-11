@@ -18,8 +18,8 @@
  "is_hidden": 0,
  "label": "Employee Self Service",
  "links": [],
- "modified": "2026-03-04 18:23:53.350734",
- "modified_by": "admin@gmail.com",
+ "modified": "2026-03-05 16:20:32.493443",
+ "modified_by": "Administrator",
  "module": "Employee Self Service",
  "name": "Employee Self Service",
  "number_cards": [],
@@ -33,6 +33,9 @@
   },
   {
    "role": "System Manager"
+  },
+  {
+   "role": "Employee Self Service"
   }
  ],
  "sequence_id": 39.0,
