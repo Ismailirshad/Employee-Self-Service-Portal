@@ -5,6 +5,10 @@ app_description = "Employee Self Service"
 app_email = "irshadsha164@gmail.com"
 app_license = "mit"
 
+app_include_js = [
+    "https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY",
+    "/assets/your_app/js/employee_location.js"
+]
 
 fixtures = [
     {
@@ -25,6 +29,12 @@ fixtures = [
             ["name", "=", "Employee Self Service"]
         ]
     },
+      {
+        "dt": "Client Script",
+        "filters": [
+            ["name", "=", "Popup Map"]
+        ]
+      }
 ]
 
 # Apps

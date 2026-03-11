@@ -1,0 +1,13 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Employee",
+  "enabled": 1,
+  "modified": "2026-03-11 13:34:42.318526",
+  "module": "Employee Self Service",
+  "name": "Popup Map",
+  "script": "let locationSelected = false;\nlet map;\nlet marker;\n\nfrappe.ui.form.on(\"Employee\", {\n    refresh(frm){\n        renderButton(frm)\n    }\n})\n\n\n// render button\nfunction renderButton(frm){\n\n    const wrapper = frm.fields_dict.custom_location_picker.$wrapper\n\n    wrapper.html(`\n        <button class=\"btn btn-primary\" id=\"pick_location_btn\">\n            Pick Location from Map\n        </button>\n    `)\n\n    wrapper.find(\"#pick_location_btn\").on(\"click\", ()=>{\n        openPopup(frm)\n    })\n\n}\n\n\n// open dialog popup\nfunction openPopup(frm){\n\n    if(locationSelected){\n        frappe.msgprint(\"Location already selected. Please refresh the page to select again.\")\n        return\n    }\n\n    const dialog = new frappe.ui.Dialog({\n        title: \"Select Location\",\n        fields:[{fieldtype:\"HTML\", fieldname:\"map_html\"}],\n        size:\"large\"\n    })\n\n    dialog.show()\n\n    setTimeout(()=>{\n        loadMap(dialog, frm)\n    },200)\n\n}\n\n\n// load leaflet map\nfunction loadMap(dialog, frm){\n\n    const wrapper = dialog.fields_dict.map_html.$wrapper\n\n    wrapper.html(`\n        <button class=\"btn btn-secondary\" id=\"current_location_btn\">\n            📍 Use My Current Location\n        </button>\n\n        <div id=\"popup_map\" style=\"height:400px;margin-top:10px;\"></div>\n    `)\n\n    map = L.map(\"popup_map\").setView([12.9716,77.5946],13)\n\n    L.tileLayer(\n        \"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\",\n        { attribution:\"© OpenStreetMap\"}\n    ).addTo(map)\n\n    map.on(\"click\", (e)=>{\n        setLocation(e.latlng, frm)\n    })\n\n    wrapper.find(\"#current_location_btn\").on(\"click\", ()=>{\n        getCurrentLocation(frm)\n    })\n\n}\n\n\n// set marker + update fields\nfunction setLocation(latlng, frm){\n\n    if(locationSelected){\n        frappe.msgprint(\"Location already selected. Please refresh the page to select again.\")\n        return\n    }\n\n    marker = L.marker(latlng).addTo(map)\n\n    frm.set_value(\"custom_site_latitude\", latlng.lat)\n    frm.set_value(\"custom_site_longitude\", latlng.lng)\n\n    locationSelected = true\n}\n\n\n// get current GPS location\nfunction getCurrentLocation(frm){\n\n    navigator.geolocation.getCurrentPosition((pos)=>{\n\n        const lat = pos.coords.latitude\n        const lng = pos.coords.longitude\n\n        map.setView([lat,lng],18)\n\n        setLocation({lat:lat, lng:lng}, frm)\n\n    })\n}",
+  "view": "Form"
+ }
+]
